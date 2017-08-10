@@ -8,7 +8,7 @@ This program consists of three classes: enum **Type**, class **Wagon** and class
 
 #### Enum Type
 This class is used to determine, which type an object of class **Wagon** has. There are four different types declared: `ENGINE, BISTRO, FIRST`and `SECOND`. According to its type, each wagon has a fixed amount of allowed passangers (**capacity**) and a String representation of its type:
-Type | capacity | name
+Type | Capacity | Name
 ---- | -------- | ----
 ENGINE | 1 | engine
 BISTRO | 30 | bistro
