@@ -7,9 +7,9 @@ This is my solution to the assignment **Train** of class **software developement
 This program consists of three classes: enum **Type**, class **Wagon** and class **Train**. A whole **Train** consists of an engine(the head of the whole train), several first class wagons, a dining wagon and several second class wagons. The dining wagon seperates the wagons of the first class from the ones of second class. The first class wagons start right after the engine. Every part of the train has its own wagon number. It starts with the engine which has the number 1. If the train is rearranged or its composition is changed (more or less wagons of any class), than the numeration has to be adjusted. This task should be done using a singly-linked list.
 
 #### Enum Type
-This class is used to determine, which type an object of class **Wagon** has. There are four different types declared: `ENGINE, BISTRO, FIRST`and `SECOND`. According to its type, each wagon has a fixed amount of allowed passangers (**capacity**) and a String representation of its type:
+This class is used to determine, of which type an object of class **Wagon** is. There are four different types declared: `ENGINE, BISTRO, FIRST`and `SECOND`. According to its type, each wagon has a fixed amount of allowed passangers (**capacity**) and a String representation of its type:
 
-Type | Capacity | Name
+Type | capacity | name
 ---- | -------- | ----
 ENGINE | 1 | engine
 BISTRO | 30 | bistro
