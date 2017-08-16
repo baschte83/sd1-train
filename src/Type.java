@@ -1,29 +1,48 @@
-/*
- * Organisation: Hochschule Muenchen, Fakultaet 07
- * Project: Praktikum Softwareentwicklung 1 Frau Prof. Dr. Hammerschall, WS 2016/2017
- * Author: Sebastian Baumann, bauman21@hm.edu
+/**
+ * Organisation: University of applied sciences Munich, faculty 07
+ * Project: lab to class software developement 1 Mrs. Prof. Dr. Hammerschall, WS 2016/2017
+ * Author: Sebastian Baumann, sebastian_baumann@gmx.net
  * Study group: IF3A
- * Date: 09. Dezember 2016
- * Purpose: Loesung Praktikumseinheit 06: Type
- * Software: Oracle Java SE JDK 1.8.0_101, Windows 10 x86_64
- * Hardware: Intel Core i5-6300 @ 2.40 GHz 2.50 GHz, 2 Cores, 4096 MB RAM
+ * Date: 09. December 2016
+ * Purpose: solution to lab Train
  */
-
 public enum Type {
 
-    // Definition der benoetigten Objektvariablen --------------------------
-    ENGINE(1, "engine"),            // Typ fuer eine Lok, fasst 1 Person
-    BISTRO(30, "bistro"),           // Typ fuer ein Bistro, fasst 30 Personen
-    FIRST(20, "first class"),       // Typ fuer einen Wagen der ersten Klasse, fasst 20 Personen
-    SECOND(50, "second class");     // Typ fuer einen Wagen der zweiten Klasse, fasst 50 Personen
+    /**
+     * Enum to represent the engine of a train which has place for 1 person.
+     */
+    ENGINE(1, "engine"),
 
-    private final int capacity;     // Anzahl erlaubter Personen
-    private final String name;      // Repraesentiert den Namen des Typs
+    /**
+     * Enum to represent the dining wagon of a train which has place for 30 persons.
+     */
+    BISTRO(30, "bistro"),
 
+    /**
+     * Enum to represent a first class wagon of a train which has place for 20 persons.
+     */
+    FIRST(20, "first class"),
 
-    // Konstruktoren -------------------------------------------------------
-    // Mit diesem Konstruktor wird die capacity passend zum Typ des
-    // Zug-Elements gesetzt.
+    /**
+     * Enum to represent a second class wagon of a train which has place for 50 persons.
+     */
+    SECOND(50, "second class");
+
+    /**
+     * Private final variable to store the capacity of allowed persons in a certain wagon.
+     */
+    private final int capacity;
+
+    /**
+     * Private final variable to store the string representation of a certain wagon.
+     */
+    private final String name;
+
+    /**
+     * Constructor to generate a new wagon with a certain amount of persons allowed in it and a string as name.
+     * @param capacity - certain amount of persons allowed in a wagon.
+     * @param n - string representation of the type of a certain wagon.
+     */
     Type(int capacity, String n) {
 
         this.capacity = capacity;
@@ -31,19 +50,23 @@ public enum Type {
 
     }
 
-    // Methoden ------------------------------------------------------------
-    // Gibt den Namen des Typs als String aus
+    /**
+     * Method to return the name of a certain wagon as a string.
+     * @return - returns the name of a certain wagon as a sring.
+     */
     public String getName() {
 
         return name;
 
     }
 
-    // Gibt die anzahl erlaubter Personen eines Wagen-Typs aus
+    /**
+     * Method to return the capacity of a certain wagon.
+     * @return - returns the capacity of a certain wagon as an integer value.
+     */
     public int getCapacity() {
 
         return capacity;
 
     }
 }
-

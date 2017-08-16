@@ -1,5 +1,17 @@
+/**
+ * Organisation: University of applied sciences Munich, faculty 07
+ * Project: lab to class software developement 1 Mrs. Prof. Dr. Hammerschall, WS 2016/2017
+ * Author: Sebastian Baumann, sebastian_baumann@gmx.net
+ * Study group: IF3A
+ * Date: 09. December 2016
+ * Purpose: solution to lab Train
+ */
 public class Main {
 
+    /**
+     * Main method with simple tests to test class Train, Type and Wagon.
+     * @param args - variable number of arguments from the terminal.
+     */
     public static void main(String[] args) {
 
         /*Train train = new Train();

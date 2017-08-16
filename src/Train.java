@@ -1,79 +1,77 @@
-/*
- * Organisation: Hochschule Muenchen, Fakultaet 07
- * Project: Praktikum Softwareentwicklung 1 Frau Prof. Dr. Hammerschall, WS 2016/2017
- * Author: Sebastian Baumann, bauman21@hm.edu
+/**
+ * Organisation: University of applied sciences Munich, faculty 07
+ * Project: lab to class software developement 1 Mrs. Prof. Dr. Hammerschall, WS 2016/2017
+ * Author: Sebastian Baumann, sebastian_baumann@gmx.net
  * Study group: IF3A
- * Date: 09. Dezember 2016
- * Purpose: Loesung Praktikumseinheit 06: Train
- * Software: Oracle Java SE JDK 1.8.0_101, Windows 10 x86_64
- * Hardware: Intel Core i5-6300 @ 2.40 GHz 2.50 GHz, 2 Cores, 4096 MB RAM
+ * Date: 09. December 2016
+ * Purpose: solution to lab Train
  */
-
 public class Train {
 
-    /*
-     * Hinweise:
-     * - Eingabewerte muessen nicht auf Gueltigkeit getestet werden.
-     * - Keiner der Methodenruempfe sollte laenger als 7 Zeilen sein (inkl. Klammern)
+    /**
+     * Private variable to store the reference to the engine of this Train object.
      */
+    private final Wagon engine;
+
+    /**
+     * Private variable to store the reference to the dining wagon of this Train object.
+     */
+    private final Wagon bistro;
 
 
-    // Definition der benoetigten Variablen --------------------------------
-    private final Wagon engine;     // speichert die Referenz auf die Lok des Zugs
-    private final Wagon bistro;     // speichert die Referenz auf das Bistro des Zugs
-
-
-    // Konstruktoren -------------------------------------------------------
-    // Konstruktor initialisiert einen neuen Zug bestehend aus Lok und Bistro
-    Train() {
+    /**
+     * Default constructor of this Train object.
+     * This constructor generates a train just with engine and dining wagon without any
+     * wagons of first or second class. To do this, it uses the next constructor.
+     */
+    public Train() {
         this(0, 0);
     }
 
     // Konstruktor initialisiert einen neuen Zug bestehend aus Lok, Bistro,
     // sowie first Wagen der ersten Klasse und secons Wagen der zweiten Klasse
-    Train(int first, int second) {
+
+    /**
+     * Constructor to generate a Train object which needs the amount of first and second class
+     * wagons as parameters.
+     * @param first - amount of first class wagons.
+     * @param second - amount of second class wagons.
+     */
+    public Train(int first, int second) {
 
         this.engine = new Wagon(Type.ENGINE);
         this.bistro = new Wagon(Type.BISTRO);
 
-        // per add werden neue first-class-Wagen erzeugt. Der Anfang ist dabei
-        // die Lok, das Ende ist der Bistrowagen
         add(engine, bistro, first, Type.FIRST);
-        // per add werden neue second-class-Wagen erzeugt. Der Anfang ist dabei
-        // der Bistrowagen, das Ende ist null, da der letzte second-class-Wagen
-        // keinen Nachfolgerwagen mehr hat und daher auf null zeigen muss.
         add(bistro, null, second, Type.SECOND);
 
-        // Jetzt muss die Nummerierung des Zugs aktualisiert werden
+        // Now the numeration of the whole train has to be adjusted.
         setNumbers();
 
     }
 
-
-    // Methoden ------------------------------------------------------------
-    // Erweitert den Zug um first neue Wagen der ersten und second neue Wagen
-    // der zweiten Klasse
+    /**
+     * Method to extend this Train object with first and second class wagons.
+     * @param first - number of first class wagons which should be added.
+     * @param second - number of second class wagons which should be added.
+     */
     void extend(int first, int second) {
 
-        // Die "first class"-Wagen werden zwischen der Lok und dem der Lok nachfolgenden Wagen eingefuegt
         add(this.engine, this.engine.getNext(), first, Type.FIRST);
-        // Die "second class"-Wagen werden zwischen dem Bistro und dem dem Bistro nachfolgenden Wagen eingefuegt
         add(this.bistro, this.bistro.getNext(), second, Type.SECOND);
-        // Aktualisierung der Zugnummerierung
+
+        // Now the numeration of the whole train has to be adjusted.
         setNumbers();
 
     }
 
-    // Verkuerzt den Zug um first Wagen der ersten und second Wagen der zweiten
-    // Klasse, wenn moeglich, sonst um so viele wie vorhanden.
+    /**
+     * Method to shorten this Train object by an amount of first and second class wagons.
+     * @param first - number of first class wagons which should be added.
+     * @param second - number of second class wagons which should be added.
+     */
     void shorten(int first, int second) {
-        /*
-         * Zuerst wird nachgesehen, ob first uns second nicht negativ sind. Ist first oder second negativ,
-         * so wird kein Wagen der ersten oder der zweiten Klasse entfernt. Ist first positiv oder 0, so wird
-         * remove mit dem Anfangspunkt Lok und dem Endpunkt Bistro und dem Zahlenwert von first aufgerufen.
-         * Ist second positiv oder 0, so wird remove mit dem Anfangspunkt Bistro und dem Endpunkt null und
-         * dem Zahlenwert von second aufgerufen.
-         */
+
         if (first >= 0 && this.engine.getNext() != this.bistro) {
             remove(this.engine, this.bistro, first);
         }
@@ -81,20 +79,25 @@ public class Train {
         if (second >= 0 && this.bistro.getNext() != null) {
             remove(this.bistro, null, second);
         }
-        // Aktualisierung der Zugnummerierung
+
+        // Now the numeration of the whole train has to be adjusted.
         setNumbers();
 
     }
 
-    // Fuegt zwischen dem Wagen start und dem Wagen end number neue Wagen vom Typ type ein
+    /**
+     * Method to add an amount of wagons of a certain type between two wagons.
+     * @param start - last wagon before the new added ones.
+     * @param end - first wagon after the new added ones.
+     * @param number - number of wagons which should be added.
+     * @param type - type of the wagons which should be added.
+     */
     void add(Wagon start, Wagon end, int number, Type type) {
         /*
-         * currentWagon repraesentiert den Wagen, auf den die Schleife aktuell zeigt.
-         * Zuerst ist currentWagon der start-Wagen. In der Schleife wird mit setNext() ein
-         * neuer Nachfolger zu currentWagon erzeugt und currentWagon damit verbunden.
-         * Nachdem number neue Wagen erzeugt und miteinander verbunden worden sind,
-         * wird nach der Schleife noch der letzte neu erzeugte Wagen mit dem end-Wagen
-         * ueber setNext() verbunden.
+         * currentWagon represents the wagon the loop points at the moment. First currentWagon
+         * is the start of the train, what means it is the engine. The loop generates a new successor
+         * wagon using the method setNext() and bonds it with the wagon currentWagon points to.
+         * The loop does this 'number' times.
          */
         Wagon currentWagon = start;
         for (int i = 0; i < number; i++) {
@@ -105,17 +108,17 @@ public class Train {
 
     }
 
-    // Entfernt zwischen dem Wagen start und dem Wagen end number Wagen,
-    // falls vorhanden, sonst so viele, wie vorhanden sind.
+    /**
+     * Method to remove a certain amount of wagons between the start and end wagon.
+     * @param start - the wagon after which wagons have to be removed.
+     * @param end - the wagon before which wagons have to be removed.
+     * @param number - amount of wagons which have to be removed.
+     */
     void remove(Wagon start, Wagon end, int number) {
         /*
-         * currentWagon repraesentiert den Wagen, auf den die Schleife aktuell zeigt.
-         * Um einen Wagen zu loeschen, wird der next-Zeiger des Wagens start auf den
-         * naechsten nicht geloeschten Wagen gesetzt. Es werden aber nur Wagen geloescht,
-         * solange noch Wagen zwischen start und end vorhanden sind. Wird waehrend dem
-         * durchlaufen der Schleife festgestellt, dass der next-Zeiger des currentWagon
-         * gleich dem Wagen end ist, so wird die Schleife verlassen. Es sind nun alle
-         * Wagen zwischen start und end verschwunden.
+         * currentWagon is the wagon the loop points to at the moment. The Wagons are not
+         * deleted, but the next pointers of the wagons is adjusted, so that the next pointer of
+         * start wagon points to the end wagon and pointers to any wagon in between are lost.
          */
         Wagon currentWagon = start;
         int counter = number;
@@ -124,22 +127,19 @@ public class Train {
             counter--;
         }
         start.setNext(currentWagon.getNext());
-        // Aktualisierung der Zugnummerierung
+
+        // Now the numeration of the whole train has to be adjusted.
         setNumbers();
 
     }
 
-    // Setzt die Nummerierung im Zug neu
+    /**
+     * Method to adjust the numeration of the whole train.
+     * This method iterates through the whole train and every wagon gets
+     * number which corresponds its position in the train, beginning with
+     * the engine by number 1.
+     */
     void setNumbers() {
-        /*
-         * currentWagon repraesentiert den Wagen, auf den die Schleife aktuell zeigt.
-         * Um nun alle Wagen des Zugs neu zu nummerieren, wird ein counter eingefuehrt
-         * und mit 1 initialisiert. Jedem currentWagon, beginnend bei der Lok, wird
-         * als neue number der aktuelle Wert von counter zugewiesen. Anschliessend wird
-         * der counter um 1 erhoeht und der currentWagon auf den naechsten Wagen des
-         * Zuges gesetzt. Das geschieht so lange, bis der currentWagon null ist, also
-         * bis es keinen currentWagon mehr gibt.
-         */
         Wagon currentWagon = this.engine;
         int counter = 1;
         while (currentWagon != null) {
@@ -151,16 +151,11 @@ public class Train {
         }
     }
 
-    // Gibt die aktuelle Reihenfolge des Zugs aus
+    /**
+     * Method to generate and return a string representation of the whole train.
+     * @return - returns a string representation of the whole train.
+     */
     public String toString() {
-        /*
-         * currentWagon repraesentiert den Wagen, auf den die Schleife aktuell zeigt.
-         * Um nun alle Wagen des Zugs auszugeben, wird ein neuer String train erzeugt
-         * und mit "" initialisiert. Danach wird die Methode toString jedes currentWagens
-         * aufgerufen (beginnend bei der Lok) und dem String train hinzugefuegt. Anschliessend
-         * wird currentWagon auf den naechsten Wagen des Zuges gesetzt. Das geschieht so lange,
-         * bis der currentWagon null ist, also bis es keinen currentWagon mehr gibt.
-         */
         String train = "";
         Wagon currentWagon = this.engine;
         while (currentWagon != null) {
